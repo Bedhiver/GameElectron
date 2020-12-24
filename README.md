@@ -2,7 +2,12 @@
 Dev an Electron App with a game engine. </br>
 </br>
 
-Instal dépendancies </br>
+Dependencies list : </br>
+- Electron 11
+- Phaser 3
+- aws-sdk 2.8</br></br>
+
+Install dependencies </br>
 `$ npm install`
 </br>
 
