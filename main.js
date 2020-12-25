@@ -1,5 +1,9 @@
-const { app, BrowserWindow } = require('electron');
+'use strict';
+
+const { app, BrowserWindow, Menu } = require('electron');
 const S3 = require('aws-sdk/clients/s3');
+
+require('electron-reload')(__dirname);
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -8,7 +12,7 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true
         },
-        frame: false
+        frame: true
     })
 
     win.loadFile('index.html')

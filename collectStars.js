@@ -1,5 +1,3 @@
-
-
 exports.collectStar = (player, star) => {
     star.disableBody(true, true);
 
