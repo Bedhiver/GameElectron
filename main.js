@@ -8,8 +8,9 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true
         },
-        frame: false
+        frame: true
     })
+    win.removeMenu();
 
     win.loadFile('index.html')
 }

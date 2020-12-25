@@ -11,7 +11,7 @@ var config = {
 };
 
 function preloadGame() {
-    this.load.image('ball', 'assets/pangball.png');
+    this.load.image('ball', '../assets/pangball.png');
 }
 
 var cursors;
@@ -22,7 +22,7 @@ function createGame() {
 
 
     var padPlayer1 = this.add.rectangle(200, 150, 148, 148, 0x6666ff);
-    var padPlayer2 = this.add.rectangle(200, 150, 148, 148, 0x6666ff);
+    var padPlayer2 = this.add.rectangle(250, 50, 148, 148, 0x6666ff);
 }
 
 function updateGame() {
