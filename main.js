@@ -14,7 +14,9 @@ function createWindow() {
         },
         frame: true
     })
-    win.removeMenu();
+
+    // TODO: Uncomment the line below to disable menubar. This line prevents to use the console browser in Electron window.
+    // win.removeMenu();
 
     win.loadFile('index.html')
 }
