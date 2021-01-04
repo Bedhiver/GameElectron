@@ -1,7 +1,7 @@
-exports.hitRectangle = (ball, rectPlayer1) => {
+exports.hitRectangle = () => {
     
     console.log(`velocity before : ${velocityBallX}`);
-    velocityBallX += 500;
+    velocityBallX += 50;
     console.log(`velocity after : ${velocityBallX}`);
 
     ball.setVelocityX(velocityBallX);
@@ -10,6 +10,4 @@ exports.hitRectangle = (ball, rectPlayer1) => {
         velocityBallY = velocityBallY * -1;
         ball.setVelocityY(velocityBallY);
     }
-
-    rectPlayer1.body.velocity.x = 0;
 }

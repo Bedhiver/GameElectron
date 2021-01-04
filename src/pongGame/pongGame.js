@@ -69,12 +69,12 @@ function updateGame() {
 }
 
 var hitRect1 = require('./hitPlayer1');
-function hitPlayer1(ball, rectPlayer1) {
-    hitRect1.hitRectangle(ball, rectPlayer1);
+function hitPlayer1() {
+    hitRect1.hitRectangle();
 }
 
 function getRandomVelocity() {
-    let rand = Math.floor(Math.random() * (100 - 30)) + 30;
+    let rand = Math.floor(Math.random() * 50) + 50;
     return Math.random() < 0.5 ? rand * -1 : rand;
 }
 
