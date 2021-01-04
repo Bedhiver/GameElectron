@@ -21,12 +21,12 @@ function preloadGame() {
 var cursor;
 var rectPlayer1;
 var rectPlayer2;
-// var velocityBallX = Phaser.Math.Between(-100, 100);
 var velocityBallX = getRandomVelocity();
 var velocityBallY = 100;
+var keyZ;
+var keyS;
 
 function createGame() {
-    // this.add.image(400, 300, 'ball');
     cursor = this.input.keyboard.createCursorKeys();
 
     ball = this.physics.add.sprite(400, 300, 'ball');
@@ -43,8 +43,8 @@ function createGame() {
     this.physics.add.existing(rectPlayer1);
     this.physics.add.existing(rectPlayer2);
 
-    this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+    keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
     rectPlayer1.body.collideWorldBounds = true;
     rectPlayer2.body.collideWorldBounds = true;
@@ -65,7 +65,7 @@ function updateGame() {
     else {
         rectPlayer1.body.velocity.y = 0;
     }
-    player2Moves.movePlayer2(this.keyZ, this.keyS);
+    player2Moves.movePlayer2();
 }
 
 var hitRect1 = require('./hitPlayer1');

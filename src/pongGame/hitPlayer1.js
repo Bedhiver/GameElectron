@@ -1,7 +1,11 @@
 exports.hitRectangle = () => {
-    
+
     console.log(`velocity before : ${velocityBallX}`);
-    velocityBallX += 50;
+    if (velocityBallX < 0) {
+        velocityBallX = (velocityBallX * -1) + 50;
+    }
+    else
+        velocityBallX += 50;
     console.log(`velocity after : ${velocityBallX}`);
 
     ball.setVelocityX(velocityBallX);
