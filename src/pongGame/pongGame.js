@@ -32,9 +32,16 @@ var containerPlayer1;
 var containerPlayer2;
 var isTopHit;
 var isPlayer1Hit;
+var scoreP1 = 0;
+var scoreP2 = 0;
+var scoreP1Text;
+var scoreP2Text;
 
 function createGame() {
     cursor = this.input.keyboard.createCursorKeys();
+
+    scoreP1Text = this.add.text(16, 20, 'Score : 0', { font: 'bold 16px Courier', fontSize: '16px', fill: '#d41f1f' });
+    scoreP2Text = this.add.text(700, 20, 'Score : 0', { font: 'bold 16px Courier', fontSize: '16px', fill: '#32a852' });
 
     ball = this.physics.add.sprite(400, 300, 'ball');
     ball.setCollideWorldBounds(true);
@@ -83,6 +90,27 @@ var playersMoves = require('./commandPlayers.js');
 function updateGame() {
     playersMoves.movePlayer1();
     playersMoves.movePlayer2();
+
+    if (ball.x > 780) {
+        scoreP1++;
+        scoreP1Text.setText(`Score : ${scoreP1}`);
+        reset();
+    }
+
+    if (ball.x < 20) {
+        scoreP2++;
+        scoreP2Text.setText(`Score : ${scoreP2}`);
+        reset();
+    }
+}
+
+function reset() {
+    ball.x = 400;
+    ball.y = 300;
+    velocityBallX = getRandomVelocity();
+    velocityBallY = 100;
+    ball.setVelocityX(velocityBallX);
+    ball.setVelocityY(velocityBallY);
 }
 
 function hitPlayer1Top() {
