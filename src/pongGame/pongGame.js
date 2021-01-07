@@ -3,7 +3,10 @@ var config = {
     width: 800,
     height: 600,
     physics: {
-        default: 'arcade'
+        default: 'arcade',
+        arcade: {
+            debug: true
+        }
     },
     backgroundColor: '#4488aa',
     scene: {
@@ -13,18 +16,22 @@ var config = {
     }
 };
 
+var game = new Phaser.Game(config);
+
 var ball;
 function preloadGame() {
     this.load.image('ball', '../../assets/pangball.png');
 }
 
 var cursor;
-var rectPlayer1;
-var rectPlayer2;
 var velocityBallX = getRandomVelocity();
 var velocityBallY = 100;
 var keyZ;
 var keyS;
+var containerPlayer1;
+var containerPlayer2;
+var isTopHit;
+var isPlayer1Hit;
 
 function createGame() {
     cursor = this.input.keyboard.createCursorKeys();
@@ -35,47 +42,79 @@ function createGame() {
     ball.setVelocityX(velocityBallX);
     ball.setVelocityY(velocityBallY);
 
-    rectPlayer1 = this.add.rectangle(10, 300, 10, 120, 0xd41f1f);
-    rectPlayer2 = this.add.rectangle(790, 300, 10, 120, 0xd41f1f);
+    var rectTopPlayer1 = this.add.rectangle(0, -30, 10, 60, 0xd41f1f); // rouge
+    var rectBotPlayer1 = this.add.rectangle(0, 30, 10, 60, 0xd41f1f); // rouge
 
-    // player1 = this.physics.add.existing(rectPlayer1);
-    // player2 = this.physics.add.existing(rectPlayer2);
-    this.physics.add.existing(rectPlayer1);
-    this.physics.add.existing(rectPlayer2);
+    var rectTopPlayer2 = this.add.rectangle(0, -30, 10, 60, 0x32a852); // vert
+    var rectBotPlayer2 = this.add.rectangle(0, 30, 10, 60, 0x32a852); // vert
+
+    this.physics.add.existing(rectTopPlayer1);
+    this.physics.add.existing(rectBotPlayer1);
+    this.physics.add.existing(rectTopPlayer2);
+    this.physics.add.existing(rectBotPlayer2);
+
+    containerPlayer1 = this.add.container(10, 300, [rectTopPlayer1, rectBotPlayer1]);
+    containerPlayer1.setSize(10, 120);
+
+    containerPlayer2 = this.add.container(790, 300, [rectTopPlayer2, rectBotPlayer2]);
+    containerPlayer2.setSize(10, 120);
+
+    this.physics.world.enable(containerPlayer1);
+    this.physics.world.enable(containerPlayer2);
 
     keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
     keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
-    rectPlayer1.body.collideWorldBounds = true;
-    rectPlayer2.body.collideWorldBounds = true;
-    rectPlayer1.body.pushable = false;
+    rectTopPlayer1.body.pushable = false;
+    rectBotPlayer1.body.pushable = false;
+    rectTopPlayer2.body.pushable = false;
+    rectBotPlayer2.body.pushable = false;
 
-    this.physics.add.collider(ball, rectPlayer1, hitPlayer1, null, this);
+    containerPlayer1.body.collideWorldBounds = true;
+    containerPlayer2.body.collideWorldBounds = true;
 
+    this.physics.add.collider(ball, rectTopPlayer1, hitPlayer1Top, null, this);
+    this.physics.add.collider(ball, rectBotPlayer1, hitPlayer1Bot, null, this);
+    this.physics.add.collider(ball, rectTopPlayer2, hitPlayer2Top, null, this);
+    this.physics.add.collider(ball, rectBotPlayer2, hitPlayer2Bot, null, this);
 }
 
-var player2Moves = require('./commandPlayer2.js');
+var playersMoves = require('./commandPlayers.js');
 function updateGame() {
-    if (cursor.up.isDown) {
-        rectPlayer1.body.velocity.y = -150;
-    }
-    else if (cursor.down.isDown) {
-        rectPlayer1.body.velocity.y = 150;
-    }
-    else {
-        rectPlayer1.body.velocity.y = 0;
-    }
-    player2Moves.movePlayer2();
+    playersMoves.movePlayer1();
+    playersMoves.movePlayer2();
 }
 
-var hitRect1 = require('./hitPlayer1');
-function hitPlayer1() {
-    hitRect1.hitRectangle();
+function hitPlayer1Top() {
+    isTopHit = true;
+    isPlayer1Hit = true;
+    hitPlayer();
+}
+
+function hitPlayer1Bot() {
+    isTopHit = false;
+    isPlayer1Hit = true;
+    hitPlayer();
+}
+
+function hitPlayer2Top() {
+    isTopHit = true;
+    isPlayer1Hit = false;
+    hitPlayer();
+}
+
+function hitPlayer2Bot() {
+    isTopHit = false;
+    isPlayer1Hit = false;
+    hitPlayer();
+}
+
+const hitPlayerFun = require('./hitPlayer.js');
+function hitPlayer() {
+    hitPlayerFun.hitPlayer();
 }
 
 function getRandomVelocity() {
     let rand = Math.floor(Math.random() * 50) + 50;
     return Math.random() < 0.5 ? rand * -1 : rand;
 }
-
-var game = new Phaser.Game(config);
