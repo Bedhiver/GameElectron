@@ -8,20 +8,23 @@ const S3 = require('aws-sdk/clients/s3');
 
 function createWindow() {
     const win = new BrowserWindow({
-        // width: 800,
-        // height: 600,
+        width: 800,
+        height: 600,
         webPreferences: {
             nodeIntegration: true
         },
         frame: true,
-        resizable: false,
+        resizable: true,
         useContentSize: true
     })
 
     // TODO: Uncomment the line below to disable menubar. This line prevents to use the console browser in Electron window.
     win.removeMenu();
+    // win.setMenuBarVisibility(false);
 
-    win.loadFile('index.html')
+    win.loadFile('index.html');
+
+    win.setResizable(false);
 }
 
 app.whenReady().then(createWindow)
