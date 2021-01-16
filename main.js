@@ -20,17 +20,18 @@ function createWindow() {
     if (isDev) {
         console.log(`dev mode is active == ${isDev}`);
         require('electron-reload')(__dirname);
+        win.webContents.openDevTools();
     }
     else {
         console.log(`dev mode is inactive == ${isDev}`);
-        win.removeMenu();
     }
-
+    
     // Uncomment this line to disable the menu bar on macOS
     // win.setMenuBarVisibility(false);
-
+    
+    win.removeMenu();
     win.loadFile('index.html');
-
+    
     // Workaround to enable useContentSize window option. useContentSize is necessary to display correct dimensions on Windows.
     // resizable is 'true' on window creation and we set it to false after the creation.
     win.setResizable(false);
