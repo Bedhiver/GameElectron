@@ -7,12 +7,21 @@ Dependencies list : </br>
 - Phaser 3
 - aws-sdk 2.8</br></br>
 
+## npm scripts
 Install dependencies </br>
 `$ npm install`
 </br>
 
 Run App </br>
 `$ npm start`
+</br>
+
+Run App in dev mode </br>
+`$ npm run dev`
+</br>
+
+Build App with `electron-packager` dependency</br>
+`$ npm run build`
 </br>
 
 ## [FR] Idées

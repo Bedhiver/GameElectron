@@ -3,9 +3,6 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const S3 = require('aws-sdk/clients/s3');
 
-// Comment line below to build the app
-// require('electron-reload')(__dirname);
-
 function createWindow() {
     const win = new BrowserWindow({
         width: 800,
@@ -18,12 +15,24 @@ function createWindow() {
         useContentSize: true
     })
 
-    // TODO: Uncomment the line below to disable menubar. This line prevents to use the console browser in Electron window.
-    win.removeMenu();
+    var isDev = process.env.APP_DEV ? (process.env.APP_DEV.trim() == "true") : false;
+
+    if (isDev) {
+        console.log(`dev mode is active == ${isDev}`);
+        require('electron-reload')(__dirname);
+    }
+    else {
+        console.log(`dev mode is inactive == ${isDev}`);
+        win.removeMenu();
+    }
+
+    // Uncomment this line to disable the menu bar on macOS
     // win.setMenuBarVisibility(false);
 
     win.loadFile('index.html');
 
+    // Workaround to enable useContentSize window option. useContentSize is necessary to display correct dimensions on Windows.
+    // resizable is 'true' on window creation and we set it to false after the creation.
     win.setResizable(false);
 }
 
